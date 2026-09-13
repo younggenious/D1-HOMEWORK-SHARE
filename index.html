@@ -1,0 +1,2569 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>CheckList Share</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family:
+        Arial,
+        "Noto Sans KR",
+        sans-serif;
+    background: #f4f7fb;
+    color: #172033;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+header {
+    background: linear-gradient(
+        135deg,
+        #2563eb,
+        #4f46e5
+    );
+
+    color: white;
+    padding: 30px 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 30px;
+}
+
+header p {
+    margin: 8px 0 0;
+    opacity: 0.9;
+}
+
+/* =========================
+   CONTAINER
+========================= */
+
+.container {
+    max-width: 1000px;
+    margin: 25px auto;
+    padding: 0 15px;
+}
+
+/* =========================
+   CARD
+========================= */
+
+.card {
+    background: white;
+    border-radius: 18px;
+    padding: 22px;
+    margin-bottom: 18px;
+
+    box-shadow:
+        0 5px 20px rgba(0,0,0,0.08);
+}
+
+.card h2 {
+    margin-top: 0;
+}
+
+/* =========================
+   INPUT
+========================= */
+
+input,
+textarea,
+button {
+    width: 100%;
+    padding: 13px;
+
+    margin-top: 8px;
+
+    border-radius: 10px;
+    border: 1px solid #d7ddea;
+
+    font-size: 15px;
+}
+
+textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+/* =========================
+   BUTTON
+========================= */
+
+button {
+    border: none;
+    background: #2563eb;
+    color: white;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.15s;
+}
+
+button:hover {
+    transform: translateY(-1px);
+    opacity: 0.9;
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+.danger {
+    background: #ef4444;
+}
+
+.secondary {
+    background: #64748b;
+}
+
+.success {
+    background: #16a34a;
+}
+
+/* =========================
+   ROW
+========================= */
+
+.row {
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 12px;
+}
+
+/* =========================
+   STATUS
+========================= */
+
+.status {
+    padding: 13px;
+
+    margin-bottom: 18px;
+
+    border-radius: 10px;
+
+    background: #dcfce7;
+    color: #166534;
+
+    font-weight: bold;
+}
+
+.status.offline {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+/* =========================
+   ROOM CODE
+========================= */
+
+.room-code {
+    text-align: center;
+
+    font-size: 30px;
+
+    font-weight: bold;
+
+    letter-spacing: 6px;
+
+    background: #eef4ff;
+
+    color: #1d4ed8;
+
+    padding: 20px;
+
+    border-radius: 14px;
+
+    margin: 15px 0;
+}
+
+/* =========================
+   TABS
+========================= */
+
+.tabs {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 8px;
+
+    margin-bottom: 18px;
+}
+
+.tab {
+    background: #e2e8f0;
+    color: #334155;
+}
+
+.tab.active {
+    background: #2563eb;
+    color: white;
+}
+
+/* =========================
+   SECTIONS
+========================= */
+
+.section {
+    display: none;
+}
+
+.section.active {
+    display: block;
+}
+
+/* =========================
+   ITEM
+========================= */
+
+.item {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    background: #f8fafc;
+
+    border: 1px solid #e2e8f0;
+
+    border-radius: 12px;
+
+    padding: 13px;
+
+    margin-top: 10px;
+}
+
+.item.done {
+    opacity: 0.55;
+
+    text-decoration: line-through;
+}
+
+.item-main {
+    flex: 1;
+}
+
+.item button {
+    width: auto;
+
+    margin: 0;
+
+    padding:
+        8px 12px;
+}
+
+/* =========================
+   MEMBER
+========================= */
+
+.member {
+    padding: 13px;
+
+    background: #f8fafc;
+
+    border-radius: 10px;
+
+    margin-top: 8px;
+}
+
+/* =========================
+   FEATURES
+========================= */
+
+.feature-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 12px;
+
+    margin-top: 20px;
+}
+
+.feature {
+    background: white;
+
+    padding: 22px;
+
+    text-align: center;
+
+    border-radius: 15px;
+
+    box-shadow:
+        0 3px 12px rgba(0,0,0,0.06);
+}
+
+/* =========================
+   EMPTY
+========================= */
+
+.empty {
+    text-align: center;
+
+    color: #64748b;
+
+    padding: 25px 10px;
+}
+
+/* =========================
+   HIDDEN
+========================= */
+
+.hidden {
+    display: none !important;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 700px) {
+
+    .row {
+        grid-template-columns: 1fr;
+    }
+
+    .feature-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .tabs {
+        grid-template-columns:
+            1fr 1fr;
+    }
+
+    header h1 {
+        font-size: 25px;
+    }
+
+    .room-code {
+        font-size: 24px;
+    }
+}
+</style>
+</head>
+
+
+<body>
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<header>
+
+    <h1>
+        ☑ CheckList Share
+    </h1>
+
+    <p>
+        가족 · 친구 · 팀과 함께 쓰는 공유 체크리스트
+    </p>
+
+</header>
+
+
+<div class="container">
+
+
+<!-- =========================
+     STATUS
+========================= -->
+
+<div
+    id="status"
+    class="status"
+>
+    🟡 준비되었습니다.
+</div>
+
+
+<!-- =========================
+     START SCREEN
+========================= -->
+
+<div
+    id="startScreen"
+>
+
+
+    <!-- 방 만들기 -->
+
+    <div class="card">
+
+        <h2>
+            🚀 공유방 만들기
+        </h2>
+
+        <p>
+            새로운 공유방을 만들고
+            다른 사람에게 방 코드를 알려주세요.
+        </p>
+
+        <input
+            id="createName"
+            type="text"
+            placeholder="내 이름"
+            maxlength="20"
+        >
+
+        <button
+            onclick="createRoom()"
+        >
+            공유방 만들기
+        </button>
+
+    </div>
+
+
+    <!-- 방 참여 -->
+
+    <div class="card">
+
+        <h2>
+            🔑 공유방 참여하기
+        </h2>
+
+        <input
+            id="joinName"
+            type="text"
+            placeholder="내 이름"
+            maxlength="20"
+        >
+
+        <input
+            id="joinCode"
+            type="text"
+            placeholder="8자리 방 코드"
+            maxlength="8"
+            oninput="formatRoomCode(this)"
+        >
+
+        <button
+            onclick="joinRoom()"
+        >
+            공유방 참여
+        </button>
+
+    </div>
+
+
+    <!-- 기능 소개 -->
+
+    <div class="feature-grid">
+
+        <div class="feature">
+
+            <h3>
+                ☑
+            </h3>
+
+            <strong>
+                공유 체크리스트
+            </strong>
+
+            <p>
+                모두가 할 일을 확인하고
+                완료할 수 있어요.
+            </p>
+
+        </div>
+
+
+        <div class="feature">
+
+            <h3>
+                📅
+            </h3>
+
+            <strong>
+                공유 일정
+            </strong>
+
+            <p>
+                팀의 중요한 일정을
+                함께 관리해요.
+            </p>
+
+        </div>
+
+
+        <div class="feature">
+
+            <h3>
+                📝
+            </h3>
+
+            <strong>
+                공유 메모
+            </strong>
+
+            <p>
+                필요한 내용을
+                함께 기록해요.
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     ROOM SCREEN
+========================= -->
+
+<div
+    id="roomScreen"
+    class="hidden"
+>
+
+
+    <!-- 방 정보 -->
+
+    <div class="card">
+
+        <h2>
+            🏠 공유방
+        </h2>
+
+        <p>
+            이 코드를 친구나 가족에게 보내세요.
+        </p>
+
+        <div
+            id="roomCode"
+            class="room-code"
+        >
+            --------
+        </div>
+
+        <div class="row">
+
+            <button
+                class="success"
+                onclick="copyRoomCode()"
+            >
+                📋 방 코드 복사
+            </button>
+
+            <button
+                class="danger"
+                onclick="leaveRoom()"
+            >
+                🚪 나가기
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- 탭 -->
+
+    <div class="tabs">
+
+        <button
+            id="tabTasks"
+            class="tab active"
+            onclick="showTab('tasks', this)"
+        >
+            ☑ 할 일
+        </button>
+
+        <button
+            id="tabEvents"
+            class="tab"
+            onclick="showTab('events', this)"
+        >
+            📅 일정
+        </button>
+
+        <button
+            id="tabMemos"
+            class="tab"
+            onclick="showTab('memos', this)"
+        >
+            📝 메모
+        </button>
+
+        <button
+            id="tabMembers"
+            class="tab"
+            onclick="showTab('members', this)"
+        >
+            👥 멤버
+        </button>
+
+    </div>
+
+
+    <!-- =====================
+         TASKS
+    ====================== -->
+
+    <div
+        id="tasks"
+        class="section active"
+    >
+
+        <div class="card">
+
+            <h2>
+                ☑ 공유 체크리스트
+            </h2>
+
+            <input
+                id="taskInput"
+                type="text"
+                placeholder="할 일을 입력하세요"
+                maxlength="100"
+                onkeydown="
+                    if(event.key === 'Enter')
+                        addTask()
+                "
+            >
+
+            <button
+                onclick="addTask()"
+            >
+                ＋ 할 일 추가
+            </button>
+
+            <div
+                id="taskList"
+            ></div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================
+         EVENTS
+    ====================== -->
+
+    <div
+        id="events"
+        class="section"
+    >
+
+        <div class="card">
+
+            <h2>
+                📅 공유 일정
+            </h2>
+
+            <input
+                id="eventTitle"
+                type="text"
+                placeholder="일정 제목"
+                maxlength="100"
+            >
+
+            <input
+                id="eventDate"
+                type="datetime-local"
+            >
+
+            <button
+                onclick="addEvent()"
+            >
+                ＋ 일정 추가
+            </button>
+
+            <div
+                id="eventList"
+            ></div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================
+         MEMOS
+    ====================== -->
+
+    <div
+        id="memos"
+        class="section"
+    >
+
+        <div class="card">
+
+            <h2>
+                📝 공유 메모
+            </h2>
+
+            <textarea
+                id="memoInput"
+                placeholder="공유할 내용을 입력하세요"
+                maxlength="1000"
+            ></textarea>
+
+            <button
+                onclick="addMemo()"
+            >
+                ＋ 메모 추가
+            </button>
+
+            <div
+                id="memoList"
+            ></div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================
+         MEMBERS
+    ====================== -->
+
+    <div
+        id="members"
+        class="section"
+    >
+
+        <div class="card">
+
+            <h2>
+                👥 참여자
+            </h2>
+
+            <div
+                id="memberList"
+            ></div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+<script>
+
+/* =====================================================
+   CheckList Share
+   JavaScript
+===================================================== */
+
+
+/* =====================================================
+   설정
+===================================================== */
+
+/*
+   현재는 브라우저 하나에서 동작하는
+   로컬 공유방 시스템입니다.
+
+   실제 여러 휴대폰/컴퓨터에서
+   같은 데이터를 실시간으로 공유하려면
+   아래 SERVER_URL에 WebSocket 서버 주소를 넣으면 됩니다.
+
+   예:
+   const SERVER_URL = "wss://example.com";
+
+   서버가 없는 상태에서는
+   로컬 모드로 자동 작동합니다.
+*/
+
+const SERVER_URL = "";
+
+
+/* =====================================================
+   변수
+===================================================== */
+
+let socket = null;
+
+let currentRoomCode = null;
+
+let currentUser = null;
+
+let currentRoom = null;
+
+
+/*
+   로컬 모드용 데이터
+*/
+
+let localRooms =
+    JSON.parse(
+        localStorage.getItem(
+            "checklist_share_rooms"
+        ) || "{}"
+    );
+
+
+/* =====================================================
+   사용자 ID
+===================================================== */
+
+function getUserId() {
+
+    let id =
+        localStorage.getItem(
+            "checklist_share_user_id"
+        );
+
+    if (!id) {
+
+        id =
+            crypto.randomUUID();
+
+        localStorage.setItem(
+            "checklist_share_user_id",
+            id
+        );
+    }
+
+    return id;
+}
+
+
+/* =====================================================
+   HTML 보안 처리
+===================================================== */
+
+function escapeHTML(value) {
+
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+
+/* =====================================================
+   상태 표시
+===================================================== */
+
+function setStatus(
+    message,
+    offline = false
+) {
+
+    const status =
+        document.getElementById(
+            "status"
+        );
+
+    status.textContent =
+        message;
+
+    status.classList.toggle(
+        "offline",
+        offline
+    );
+}
+
+
+/* =====================================================
+   방 코드 생성
+===================================================== */
+
+function generateRoomCode() {
+
+    const characters =
+        "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+
+    let result = "";
+
+    for (
+        let i = 0;
+        i < 8;
+        i++
+    ) {
+
+        result +=
+            characters[
+                Math.floor(
+                    Math.random() *
+                    characters.length
+                )
+            ];
+    }
+
+    return result;
+}
+
+
+/* =====================================================
+   방 코드 입력
+===================================================== */
+
+function formatRoomCode(input) {
+
+    input.value =
+        input.value
+            .toUpperCase()
+            .replace(
+                /[^A-Z0-9]/g,
+                ""
+            )
+            .slice(0, 8);
+}
+
+
+/* =====================================================
+   방 데이터 생성
+===================================================== */
+
+function createEmptyRoom(
+    code
+) {
+
+    return {
+
+        code: code,
+
+        tasks: [],
+
+        events: [],
+
+        memos: [],
+
+        members: []
+
+    };
+}
+
+
+/* =====================================================
+   로컬 저장
+===================================================== */
+
+function saveLocalRooms() {
+
+    localStorage.setItem(
+        "checklist_share_rooms",
+        JSON.stringify(
+            localRooms
+        )
+    );
+}
+
+
+/* =====================================================
+   로컬 방 생성
+===================================================== */
+
+function createLocalRoom(
+    name
+) {
+
+    let code;
+
+    do {
+
+        code =
+            generateRoomCode();
+
+    } while (
+        localRooms[code]
+    );
+
+
+    const room =
+        createEmptyRoom(code);
+
+
+    currentUser = {
+
+        id: getUserId(),
+
+        name: name
+
+    };
+
+
+    room.members.push({
+
+        id: currentUser.id,
+
+        name: currentUser.name
+
+    });
+
+
+    localRooms[code] =
+        room;
+
+
+    currentRoomCode =
+        code;
+
+    currentRoom =
+        room;
+
+
+    saveLocalRooms();
+
+    openRoom();
+
+    setStatus(
+        "🟢 로컬 공유방이 만들어졌습니다."
+    );
+}
+
+
+/* =====================================================
+   로컬 방 참여
+===================================================== */
+
+function joinLocalRoom(
+    name,
+    code
+) {
+
+    const room =
+        localRooms[code];
+
+
+    if (!room) {
+
+        alert(
+            "존재하지 않는 공유방입니다."
+        );
+
+        return;
+    }
+
+
+    currentUser = {
+
+        id: getUserId(),
+
+        name: name
+
+    };
+
+
+    const alreadyMember =
+        room.members.some(
+            member =>
+                member.id ===
+                currentUser.id
+        );
+
+
+    if (!alreadyMember) {
+
+        room.members.push({
+
+            id: currentUser.id,
+
+            name: currentUser.name
+
+        });
+
+    }
+
+
+    currentRoomCode =
+        code;
+
+    currentRoom =
+        room;
+
+
+    saveLocalRooms();
+
+    openRoom();
+
+    setStatus(
+        "🟢 공유방에 참여했습니다."
+    );
+}
+
+
+/* =====================================================
+   방 만들기
+===================================================== */
+
+function createRoom() {
+
+    const name =
+        document
+            .getElementById(
+                "createName"
+            )
+            .value
+            .trim();
+
+
+    if (!name) {
+
+        alert(
+            "이름을 입력해주세요."
+        );
+
+        return;
+    }
+
+
+    if (SERVER_URL) {
+
+        connectServer(() => {
+
+            currentUser = {
+
+                id: getUserId(),
+
+                name: name
+
+            };
+
+
+            currentRoomCode =
+                generateRoomCode();
+
+
+            sendServer({
+
+                type:
+                    "create_room",
+
+                roomCode:
+                    currentRoomCode,
+
+                user:
+                    currentUser
+
+            });
+
+        });
+
+        return;
+    }
+
+
+    createLocalRoom(name);
+}
+
+
+/* =====================================================
+   방 참여
+===================================================== */
+
+function joinRoom() {
+
+    const name =
+        document
+            .getElementById(
+                "joinName"
+            )
+            .value
+            .trim();
+
+
+    const code =
+        document
+            .getElementById(
+                "joinCode"
+            )
+            .value
+            .trim()
+            .toUpperCase();
+
+
+    if (!name) {
+
+        alert(
+            "이름을 입력해주세요."
+        );
+
+        return;
+    }
+
+
+    if (code.length !== 8) {
+
+        alert(
+            "방 코드는 8자리입니다."
+        );
+
+        return;
+    }
+
+
+    if (SERVER_URL) {
+
+        connectServer(() => {
+
+            currentUser = {
+
+                id: getUserId(),
+
+                name: name
+
+            };
+
+
+            currentRoomCode =
+                code;
+
+
+            sendServer({
+
+                type:
+                    "join_room",
+
+                roomCode:
+                    code,
+
+                user:
+                    currentUser
+
+            });
+
+        });
+
+        return;
+    }
+
+
+    joinLocalRoom(
+        name,
+        code
+    );
+}
+
+
+/* =====================================================
+   서버 연결
+===================================================== */
+
+function connectServer(
+    callback
+) {
+
+    if (!SERVER_URL) {
+
+        callback();
+
+        return;
+    }
+
+
+    if (
+        socket &&
+        socket.readyState ===
+        WebSocket.OPEN
+    ) {
+
+        callback();
+
+        return;
+    }
+
+
+    setStatus(
+        "🟡 서버 연결 중..."
+    );
+
+
+    socket =
+        new WebSocket(
+            SERVER_URL
+        );
+
+
+    socket.onopen =
+        function() {
+
+            setStatus(
+                "🟢 서버에 연결되었습니다."
+            );
+
+            callback();
+        };
+
+
+    socket.onmessage =
+        function(event) {
+
+            try {
+
+                const message =
+                    JSON.parse(
+                        event.data
+                    );
+
+                handleServerMessage(
+                    message
+                );
+
+            } catch(error) {
+
+                console.error(
+                    error
+                );
+            }
+        };
+
+
+    socket.onclose =
+        function() {
+
+            setStatus(
+                "🔴 서버 연결이 끊어졌습니다.",
+                true
+            );
+        };
+
+
+    socket.onerror =
+        function() {
+
+            setStatus(
+                "🔴 서버 연결 오류",
+                true
+            );
+        };
+}
+
+
+/* =====================================================
+   서버 데이터 전송
+===================================================== */
+
+function sendServer(
+    data
+) {
+
+    if (
+        !socket ||
+        socket.readyState !==
+        WebSocket.OPEN
+    ) {
+
+        alert(
+            "서버에 연결되어 있지 않습니다."
+        );
+
+        return;
+    }
+
+
+    socket.send(
+        JSON.stringify(
+            data
+        )
+    );
+}
+
+
+/* =====================================================
+   서버 메시지 처리
+===================================================== */
+
+function handleServerMessage(
+    message
+) {
+
+    if (
+        message.type ===
+        "room_created"
+    ) {
+
+        currentRoom =
+            message.room;
+
+        openRoom();
+
+        return;
+    }
+
+
+    if (
+        message.type ===
+        "room_joined"
+    ) {
+
+        currentRoom =
+            message.room;
+
+        openRoom();
+
+        return;
+    }
+
+
+    if (
+        message.type ===
+        "room_updated"
+    ) {
+
+        currentRoom =
+            message.room;
+
+        renderAll();
+
+        return;
+    }
+
+
+    if (
+        message.type ===
+        "error"
+    ) {
+
+        alert(
+            message.message
+        );
+
+        return;
+    }
+
+
+    if (
+        message.type ===
+        "room_closed"
+    ) {
+
+        alert(
+            "공유방이 종료되었습니다."
+        );
+
+        leaveRoom(
+            false
+        );
+    }
+}
+
+
+/* =====================================================
+   방 화면 열기
+===================================================== */
+
+function openRoom() {
+
+    document
+        .getElementById(
+            "startScreen"
+        )
+        .classList
+        .add("hidden");
+
+
+    document
+        .getElementById(
+            "roomScreen"
+        )
+        .classList
+        .remove("hidden");
+
+
+    document
+        .getElementById(
+            "roomCode"
+        )
+        .textContent =
+            currentRoomCode;
+
+
+    renderAll();
+}
+
+
+/* =====================================================
+   전체 렌더링
+===================================================== */
+
+function renderAll() {
+
+    if (!currentRoom) {
+
+        return;
+    }
+
+
+    renderTasks();
+
+    renderEvents();
+
+    renderMemos();
+
+    renderMembers();
+}
+
+
+/* =====================================================
+   할 일 추가
+===================================================== */
+
+function addTask() {
+
+    const input =
+        document
+            .getElementById(
+                "taskInput"
+            );
+
+
+    const text =
+        input.value.trim();
+
+
+    if (!text) {
+
+        return;
+    }
+
+
+    if (SERVER_URL) {
+
+        sendServer({
+
+            type:
+                "add_task",
+
+            roomCode:
+                currentRoomCode,
+
+            text:
+                text
+
+        });
+
+    } else {
+
+        currentRoom.tasks.push({
+
+            id:
+                crypto.randomUUID(),
+
+            text:
+                text,
+
+            done:
+                false,
+
+            author:
+                currentUser.name,
+
+            createdAt:
+                Date.now()
+
+        });
+
+
+        saveLocalRooms();
+
+        renderAll();
+    }
+
+
+    input.value = "";
+}
+
+
+/* =====================================================
+   할 일 완료
+===================================================== */
+
+function toggleTask(
+    id
+) {
+
+    if (SERVER_URL) {
+
+        sendServer({
+
+            type:
+                "toggle_task",
+
+            roomCode:
+                currentRoomCode,
+
+            id:
+                id
+
+        });
+
+        return;
+    }
+
+
+    const task =
+        currentRoom.tasks.find(
+            item =>
+                item.id === id
+        );
+
+
+    if (!task) {
+
+        return;
+    }
+
+
+    task.done =
+        !task.done;
+
+
+    saveLocalRooms();
+
+    renderAll();
+}
+
+
+/* =====================================================
+   할 일 삭제
+===================================================== */
+
+function deleteTask(
+    id
+) {
+
+    if (!confirm(
+        "이 할 일을 삭제할까요?"
+    )) {
+
+        return;
+    }
+
+
+    if (SERVER_URL) {
+
+        sendServer({
+
+            type:
+                "delete_task",
+
+            roomCode:
+                currentRoomCode,
+
+            id:
+                id
+
+        });
+
+        return;
+    }
+
+
+    currentRoom.tasks =
+        currentRoom.tasks.filter(
+            item =>
+                item.id !== id
+        );
+
+
+    saveLocalRooms();
+
+    renderAll();
+}
+
+
+/* =====================================================
+   할 일 렌더링
+===================================================== */
+
+function renderTasks() {
+
+    const list =
+        document
+            .getElementById(
+                "taskList"
+            );
+
+
+    list.innerHTML = "";
+
+
+    if (
+        !currentRoom.tasks ||
+        currentRoom.tasks.length === 0
+    ) {
+
+        list.innerHTML = `
+            <div class="empty">
+                아직 할 일이 없습니다.
+            </div>
+        `;
+
+        return;
+    }
+
+
+    currentRoom.tasks.forEach(
+        task => {
+
+            const item =
+                document
+                    .createElement(
+                        "div"
+                    );
+
+
+            item.className =
+                "item" +
+                (
+                    task.done
+                        ? " done"
+                        : ""
+                );
+
+
+            item.innerHTML = `
+
+                <input
+                    type="checkbox"
+                    ${
+                        task.done
+                            ? "checked"
+                            : ""
+                    }
+                    onchange="
+                        toggleTask(
+                            '${task.id}'
+                        )
+                    "
+                    style="
+                        width:auto;
+                        margin:0;
+                    "
+                >
+
+                <div
+                    class="item-main"
+                >
+
+                    <strong>
+                        ${escapeHTML(
+                            task.text
+                        )}
+                    </strong>
+
+                    <br>
+
+                    <small>
+                        작성자:
+                        ${escapeHTML(
+                            task.author
+                        )}
+                    </small>
+
+                </div>
+
+                <button
+                    class="danger"
+                    onclick="
+                        deleteTask(
+                            '${task.id}'
+                        )
+                    "
+                >
+                    삭제
+                </button>
+            `;
+
+
+            list.appendChild(
+                item
+            );
+        }
+    );
+}
+
+
+/* =====================================================
+   일정 추가
+===================================================== */
+
+function addEvent() {
+
+    const title =
+        document
+            .getElementById(
+                "eventTitle"
+            )
+            .value
+            .trim();
+
+
+    const date =
+        document
+            .getElementById(
+                "eventDate"
+            )
+            .value;
+
+
+    if (!title) {
+
+        alert(
+            "일정 제목을 입력해주세요."
+        );
+
+        return;
+    }
+
+
+    if (!date) {
+
+        alert(
+            "날짜와 시간을 선택해주세요."
+        );
+
+        return;
+    }
+
+
+    if (SERVER_URL) {
+
+        sendServer({
+
+            type:
+                "add_event",
+
+            roomCode:
+                currentRoomCode,
+
+            title:
+                title,
+
+            date:
+                date
+
+        });
+
+    } else {
+
+        currentRoom.events.push({
+
+            id:
+                crypto.randomUUID(),
+
+            title:
+                title,
+
+            date:
+                date,
+
+            author:
+                currentUser.name,
+
+            createdAt:
+                Date.now()
+
+        });
+
+
+        saveLocalRooms();
+
+        renderAll();
+    }
+
+
+    document
+        .getElementById(
+            "eventTitle"
+        )
+        .value = "";
+
+
+    document
+        .getElementById(
+            "eventDate"
+        )
+        .value = "";
+}
+
+
+/* =====================================================
+   일정 삭제
+===================================================== */
+
+function deleteEvent(
+    id
+) {
+
+    if (!confirm(
+        "이 일정을 삭제할까요?"
+    )) {
+
+        return;
+    }
+
+
+    if (SERVER_URL) {
+
+        sendServer({
+
+            type:
+                "delete_event",
+
+            roomCode:
+                currentRoomCode,
+
+            id:
+                id
+
+        });
+
+        return;
+    }
+
+
+    currentRoom.events =
+        currentRoom.events.filter(
+            event =>
+                event.id !== id
+        );
+
+
+    saveLocalRooms();
+
+    renderAll();
+}
+
+
+/* =====================================================
+   일정 렌더링
+===================================================== */
+
+function renderEvents() {
+
+    const list =
+        document
+            .getElementById(
+                "eventList"
+            );
+
+
+    list.innerHTML = "";
+
+
+    if (
+        !currentRoom.events ||
+        currentRoom.events.length === 0
+    ) {
+
+        list.innerHTML = `
+            <div class="empty">
+                등록된 일정이 없습니다.
+            </div>
+        `;
+
+        return;
+    }
+
+
+    const events =
+        [
+            ...currentRoom.events
+        ].sort(
+            (a, b) =>
+                new Date(a.date) -
+                new Date(b.date)
+        );
+
+
+    events.forEach(
+        event => {
+
+            const item =
+                document
+                    .createElement(
+                        "div"
+                    );
+
+
+            item.className =
+                "item";
+
+
+            let formattedDate = "";
+
+
+            try {
+
+                formattedDate =
+                    new Date(
+                        event.date
+                    ).toLocaleString(
+                        "ko-KR"
+                    );
+
+            } catch {
+
+                formattedDate =
+                    event.date;
+            }
+
+
+            item.innerHTML = `
+
+                <div
+                    class="item-main"
+                >
+
+                    <strong>
+                        ${escapeHTML(
+                            event.title
+                        )}
+                    </strong>
+
+                    <br>
+
+                    📅
+                    ${escapeHTML(
+                        formattedDate
+                    )}
+
+                    <br>
+
+                    <small>
+                        작성자:
+                        ${escapeHTML(
+                            event.author
+                        )}
+                    </small>
+
+                </div>
+
+                <button
+                    class="danger"
+                    onclick="
+                        deleteEvent(
+                            '${event.id}'
+                        )
+                    "
+                >
+                    삭제
+                </button>
+
+            `;
+
+
+            list.appendChild(
+                item
+            );
+        }
+    );
+}
+
+
+/* =====================================================
+   메모 추가
+===================================================== */
+
+function addMemo() {
+
+    const input =
+        document
+            .getElementById(
+                "memoInput"
+            );
+
+
+    const text =
+        input.value.trim();
+
+
+    if (!text) {
+
+        return;
+    }
+
+
+    if (SERVER_URL) {
+
+        sendServer({
+
+            type:
+                "add_memo",
+
+            roomCode:
+                currentRoomCode,
+
+            text:
+                text
+
+        });
+
+    } else {
+
+        currentRoom.memos.push({
+
+            id:
+                crypto.randomUUID(),
+
+            text:
+                text,
+
+            author:
+                currentUser.name,
+
+            createdAt:
+                Date.now()
+
+        });
+
+
+        saveLocalRooms();
+
+        renderAll();
+    }
+
+
+    input.value = "";
+}
+
+
+/* =====================================================
+   메모 삭제
+===================================================== */
+
+function deleteMemo(
+    id
+) {
+
+    if (!confirm(
+        "이 메모를 삭제할까요?"
+    )) {
+
+        return;
+    }
+
+
+    if (SERVER_URL) {
+
+        sendServer({
+
+            type:
+                "delete_memo",
+
+            roomCode:
+                currentRoomCode,
+
+            id:
+                id
+
+        });
+
+        return;
+    }
+
+
+    currentRoom.memos =
+        currentRoom.memos.filter(
+            memo =>
+                memo.id !== id
+        );
+
+
+    saveLocalRooms();
+
+    renderAll();
+}
+
+
+/* =====================================================
+   메모 렌더링
+===================================================== */
+
+function renderMemos() {
+
+    const list =
+        document
+            .getElementById(
+                "memoList"
+            );
+
+
+    list.innerHTML = "";
+
+
+    if (
+        !currentRoom.memos ||
+        currentRoom.memos.length === 0
+    ) {
+
+        list.innerHTML = `
+            <div class="empty">
+                등록된 메모가 없습니다.
+            </div>
+        `;
+
+        return;
+    }
+
+
+    [
+        ...currentRoom.memos
+    ]
+        .reverse()
+        .forEach(
+            memo => {
+
+                const item =
+                    document
+                        .createElement(
+                            "div"
+                        );
+
+
+                item.className =
+                    "item";
+
+
+                let formattedDate = "";
+
+
+                try {
+
+                    formattedDate =
+                        new Date(
+                            memo.createdAt
+                        ).toLocaleString(
+                            "ko-KR"
+                        );
+
+                } catch {
+
+                    formattedDate =
+                        "";
+                }
+
+
+                item.innerHTML = `
+
+                    <div
+                        class="item-main"
+                    >
+
+                        ${escapeHTML(
+                            memo.text
+                        )}
+
+                        <br>
+
+                        <small>
+                            ${escapeHTML(
+                                memo.author
+                            )}
+                            ·
+                            ${escapeHTML(
+                                formattedDate
+                            )}
+                        </small>
+
+                    </div>
+
+                    <button
+                        class="danger"
+                        onclick="
+                            deleteMemo(
+                                '${memo.id}'
+                            )
+                        "
+                    >
+                        삭제
+                    </button>
+
+                `;
+
+
+                list.appendChild(
+                    item
+                );
+            }
+        );
+}
+
+
+/* =====================================================
+   멤버 렌더링
+===================================================== */
+
+function renderMembers() {
+
+    const list =
+        document
+            .getElementById(
+                "memberList"
+            );
+
+
+    list.innerHTML = "";
+
+
+    if (
+        !currentRoom.members ||
+        currentRoom.members.length === 0
+    ) {
+
+        list.innerHTML = `
+            <div class="empty">
+                참여자가 없습니다.
+            </div>
+        `;
+
+        return;
+    }
+
+
+    currentRoom.members.forEach(
+        member => {
+
+            const item =
+                document
+                    .createElement(
+                        "div"
+                    );
+
+
+            item.className =
+                "member";
+
+
+            const isMe =
+                currentUser &&
+                member.id ===
+                currentUser.id;
+
+
+            item.innerHTML = `
+
+                👤
+                ${escapeHTML(
+                    member.name
+                )}
+
+                ${
+                    isMe
+                        ? "<strong> (나)</strong>"
+                        : ""
+                }
+
+            `;
+
+
+            list.appendChild(
+                item
+            );
+        }
+    );
+}
+
+
+/* =====================================================
+   탭 전환
+===================================================== */
+
+function showTab(
+    name,
+    button
+) {
+
+    document
+        .querySelectorAll(
+            ".section"
+        )
+        .forEach(
+            section => {
+
+                section.classList
+                    .remove(
+                        "active"
+                    );
+            }
+        );
+
+
+    document
+        .querySelectorAll(
+            ".tab"
+        )
+        .forEach(
+            tab => {
+
+                tab.classList
+                    .remove(
+                        "active"
+                    );
+            }
+        );
+
+
+    document
+        .getElementById(
+            name
+        )
+        .classList
+        .add(
+            "active"
+        );
+
+
+    button.classList
+        .add(
+            "active"
+        );
+}
+
+
+/* =====================================================
+   방 코드 복사
+===================================================== */
+
+async function copyRoomCode() {
+
+    if (!currentRoomCode) {
+
+        return;
+    }
+
+
+    try {
+
+        await navigator
+            .clipboard
+            .writeText(
+                currentRoomCode
+            );
+
+
+        alert(
+            "방 코드가 복사되었습니다!"
+        );
+
+    } catch {
+
+        prompt(
+            "방 코드를 복사하세요.",
+            currentRoomCode
+        );
+    }
+}
+
+
+/* =====================================================
+   방 나가기
+===================================================== */
+
+function leaveRoom(
+    tellServer = true
+) {
+
+    if (
+        SERVER_URL &&
+        tellServer &&
+        socket &&
+        socket.readyState ===
+        WebSocket.OPEN
+    ) {
+
+        sendServer({
+
+            type:
+                "leave_room",
+
+            roomCode:
+                currentRoomCode
+
+        });
+    }
+
+
+    currentRoomCode =
+        null;
+
+    currentUser =
+        null;
+
+    currentRoom =
+        null;
+
+
+    document
+        .getElementById(
+            "roomScreen"
+        )
+        .classList
+        .add(
+            "hidden"
+        );
+
+
+    document
+        .getElementById(
+            "startScreen"
+        )
+        .classList
+        .remove(
+            "hidden"
+        );
+
+
+    setStatus(
+        SERVER_URL
+            ? "🟡 준비되었습니다."
+            : "🟡 로컬 모드입니다."
+    );
+}
+
+
+/* =====================================================
+   페이지 시작
+===================================================== */
+
+(function init() {
+
+    if (SERVER_URL) {
+
+        setStatus(
+            "🟡 서버 연결 준비 중..."
+        );
+
+    } else {
+
+        setStatus(
+            "🟡 로컬 모드 · 준비되었습니다."
+        );
+
+    }
+
+})();
+
+</script>
+
+</body>
+</html>s
